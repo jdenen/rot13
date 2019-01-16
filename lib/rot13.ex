@@ -15,13 +15,8 @@ defmodule Rot13 do
       {:error, "Value cannot be encoded"}
 
   """
-  def encode(text) when not is_binary(text) do
-    {:error, "Value cannot be encoded"}
-  end
-
-  def encode(text) do
-    {:ok, rotate(text)}
-  end
+  def encode(text) when is_binary(text), do: {:ok, rotate(text)}
+  def encode(_), do: {:error, "Value cannot be encoded"}
 
   @doc """
   Returns an encoded string, raising an `ArgumentError` if the value passed can't be encoded.
