@@ -1,6 +1,6 @@
 defmodule Rot13 do
   @moduledoc """
-  Rot13 performs a [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher), shifting 13 places up the English alphabet.
+  `Rot13` performs a [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher), shifting 13 places up the English alphabet.
   """
 
   @doc """
@@ -12,10 +12,12 @@ defmodule Rot13 do
       {:ok, "Rkrphgr Beqre 66!"}
 
   """
+  def encode(text) when not is_binary(text) do
+    {:error, "Value cannot be encoded"}
+  end
+
   def encode(text) do
-    with encoded <- rotate(text) do
-      {:ok, encoded}
-    end
+    {:ok, rotate(text)}
   end
 
   @doc """

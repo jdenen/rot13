@@ -30,6 +30,11 @@ defmodule Rot13Test do
     test "ignores empty strings" do
       assert Rot13.encode("") == {:ok, ""}
     end
+
+    test "returns an :error tuple in case of error" do
+      assert Rot13.encode(12) == {:error, "Value cannot be encoded"}
+      assert Rot13.encode({:ok, "Hi"}) == {:error, "Value cannot be encoded"}
+    end
   end
 
   describe "decode" do
