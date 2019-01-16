@@ -11,6 +11,9 @@ defmodule Rot13 do
       iex> Rot13.encode("Execute Order 66!")
       {:ok, "Rkrphgr Beqre 66!"}
 
+      iex> Rot13.encode(42)
+      {:error, "Value cannot be encoded"}
+
   """
   def encode(text) when not is_binary(text) do
     {:error, "Value cannot be encoded"}
@@ -20,6 +23,18 @@ defmodule Rot13 do
     {:ok, rotate(text)}
   end
 
+  @doc """
+  Returns an encoded string, raising an `ArgumentError` if the value passed can't be encoded.
+
+  ## Examples
+
+      iex> Rot13.encode!("Execute Order 66!")
+      "Rkrphgr Beqre 66!"
+
+      iex> Rot13.encode!(42)
+      ** (ArgumentError) Value cannot be encoded
+
+  """
   def encode!(text) do
     with {:ok, encoded} <- encode(text) do
       encoded
@@ -35,6 +50,9 @@ defmodule Rot13 do
 
       iex> Rot13.decode("Execute Order 66!")
       {:ok, "Rkrphgr Beqre 66!"}
+
+      iex> Rot13.encode(42)
+      {:error, "Value cannot be encoded"}
 
   """
   defdelegate decode(text), to: __MODULE__, as: :encode
