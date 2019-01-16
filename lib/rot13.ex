@@ -18,6 +18,17 @@ defmodule Rot13 do
 
   def encode(_), do: ""
 
+  @doc """
+  This is a (poor) attempt at humor.
+
+  ## Examples
+
+      iex> Rot13.decode("Execute Order 66!")
+      "Rkrphgr Beqre 66!"
+
+  """
+  defdelegate decode(text), to: __MODULE__, as: :encode
+
   defp rotate(char) when char in ?a..?z do
     rem(char - ?a + 13, 26) + ?a
   end
