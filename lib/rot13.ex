@@ -20,6 +20,14 @@ defmodule Rot13 do
     {:ok, rotate(text)}
   end
 
+  def encode!(text) do
+    with {:ok, encoded} <- encode(text) do
+      encoded
+    else
+      {:error, reason} -> raise ArgumentError, reason
+    end
+  end
+
   @doc """
   This is a (poor) attempt at humor.
 

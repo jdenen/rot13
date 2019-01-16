@@ -37,6 +37,16 @@ defmodule Rot13Test do
     end
   end
 
+  describe "encode!" do
+    test "returns a rotated string without :ok tuple" do
+      assert Rot13.encode!("Hi! Hey. Hello?") == "Uv! Url. Uryyb?"
+    end
+
+    test "raises an ArgumentError if value cannot be encoded" do
+      assert_raise ArgumentError, "Value cannot be encoded", fn -> Rot13.encode!(42) end
+    end
+  end
+
   describe "decode" do
     test "is super useful" do
       assert Rot13.decode("Uv! Url. Uryyb?") == {:ok, "Hi! Hey. Hello?"}
