@@ -1,18 +1,30 @@
 defmodule Rot13 do
   @moduledoc """
-  Documentation for Rot13.
+  Rot13 performs a [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher), shifting 13 places up the English alphabet.
   """
 
   @doc """
-  Hello world.
+  Returns an encoded string, ignoring numbers and punctuation.
 
   ## Examples
 
-      iex> Rot13.hello()
-      :world
+      iex> Rot13.encode("Execute Order 66!")
+      "Rkrphgr Beqre 66!"
 
   """
-  def hello do
-    :world
+  def encode(<<char>> <> text) do
+    <<rotate(char)>> <> encode(text)
   end
+
+  def encode(_), do: ""
+
+  defp rotate(char) when char in ?a..?z do
+    rem(char - ?a + 13, 26) + ?a
+  end
+
+  defp rotate(char) when char in ?A..?Z do
+    rem(char - ?A + 13, 26) + ?A
+  end
+
+  defp rotate(char), do: char
 end
