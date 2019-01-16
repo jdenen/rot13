@@ -4,19 +4,19 @@ defmodule Rot13 do
   """
 
   @doc """
-  Returns an encoded string, ignoring numbers and punctuation.
+  Returns an `:ok` tuple with an encoded string, ignoring numbers and punctuation.
 
   ## Examples
 
       iex> Rot13.encode("Execute Order 66!")
-      "Rkrphgr Beqre 66!"
+      {:ok, "Rkrphgr Beqre 66!"}
 
   """
-  def encode(<<char>> <> text) do
-    <<rotate(char)>> <> encode(text)
+  def encode(text) do
+    with encoded <- rotate(text) do
+      {:ok, encoded}
+    end
   end
-
-  def encode(_), do: ""
 
   @doc """
   This is a (poor) attempt at humor.
@@ -24,18 +24,24 @@ defmodule Rot13 do
   ## Examples
 
       iex> Rot13.decode("Execute Order 66!")
-      "Rkrphgr Beqre 66!"
+      {:ok, "Rkrphgr Beqre 66!"}
 
   """
   defdelegate decode(text), to: __MODULE__, as: :encode
 
-  defp rotate(char) when char in ?a..?z do
+  defp rotate(<<char>> <> text) do
+    <<rotate_char(char)>> <> rotate(text)
+  end
+
+  defp rotate(_), do: ""
+
+  defp rotate_char(char) when char in ?a..?z do
     rem(char - ?a + 13, 26) + ?a
   end
 
-  defp rotate(char) when char in ?A..?Z do
+  defp rotate_char(char) when char in ?A..?Z do
     rem(char - ?A + 13, 26) + ?A
   end
 
-  defp rotate(char), do: char
+  defp rotate_char(char), do: char
 end
