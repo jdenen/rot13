@@ -9,6 +9,7 @@ defmodule Rot13.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       package: package(),
+      source_url: "https://github.com/jdenen/rot13",
       description: "A rot13 cipher library"
     ]
   end
